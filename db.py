@@ -9,7 +9,7 @@ load_dotenv()
 # main function to get data
 
 
-def getData(url, post_code, table_name, values="hr_ktu"):
+def getData(url, post_code, table_name, values="Hr_ktu"):
     query = {
         "query": [
             {
@@ -94,7 +94,17 @@ def getData(url, post_code, table_name, values="hr_ktu"):
             print("connection closed")
 
 
-url = "https://pxnet2.stat.fi:443/PXWeb/api/v1/en/Postinumeroalueittainen_avoin_tieto/2021/paavo_pxt_12f1.px"
-post_code = ["00130", "02380", "16710", "41930", "54800"]
-table_name = "TABLE_2021"
-getData(url, post_code, table_name)
+years = [2017, 2018, 2019, 2020, 2021]
+post_codes = ["00130", "02380", "16710", "41930", "54800"]
+for year in years:
+    page = f"paavo_3_hr_{year}"
+    values = "Hr_ktu"
+    if year > 2019:
+        page = f"paavo_pxt_12f1"
+        values = "hr_ktu"
+    getData(
+        f"https://pxnet2.stat.fi:443/PXWeb/api/v1/en/Postinumeroalueittainen_avoin_tieto/{year}/{page}.px",
+        post_codes,
+        f"TABLE_{year}",
+        values,
+    )
