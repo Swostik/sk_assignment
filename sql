@@ -1,3 +1,4 @@
+/* First way prints out all the data in the order of income_diifference  */
 SELECT 
     t21.post_code,
     t17.average_income average_income_2017,
@@ -16,7 +17,8 @@ SELECT
     INNER JOIN 
     table_2017 t17 ON t17.post_code = t21.post_code
 	ORDER BY income_difference DESC;
-	
+
+/* Second method provides one exact post_code with maximum income_differnce */	
 SELECT query_2.post_code, query_2.income_difference FROM 
 (SELECT MAX((t21.average_income - t17.average_income)*100.0/ t17.average_income) income_difference
 		FROM table_2021 t21
